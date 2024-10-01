@@ -50,7 +50,7 @@ export class EditComponent implements OnInit {
     else {
       this.carService.updateCar(this.car).subscribe({
         next: (response) => {
-          this.successMessage = 'Car updated successfully!';
+          this.successMessage = 'Car with ID '+this.car.id+' updated successfully!';
           // Optionally redirect after a delay or immediately
           setTimeout(() => {
             this.router.navigate(['/']); // Redirect to car list or another page
