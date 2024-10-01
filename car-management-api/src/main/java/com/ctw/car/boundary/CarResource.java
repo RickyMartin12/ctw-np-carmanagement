@@ -10,12 +10,14 @@ import com.ctw.car.entity.Routes;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Path(Routes.CAR)
@@ -74,6 +76,52 @@ public class CarResource {
         return Response.status(Response.Status.CREATED)
                 .entity(createdCar)
                 .build();
+    }
+    
+    @DELETE
+    @Path("/delete/{id}")
+    @Transactional // Ensure this method is transactional
+    public Response deleteCar(@PathParam("id") UUID id) {
+        boolean deleted = carService.deleteCar(id); // Call service method
+
+        if (deleted) {
+            return Response.noContent().build(); // Return 204 No Content on success
+        } else {
+            return Response.status(Response.Status.NOT_FOUND) // Return 404 Not Found if the car does not exist
+                           .entity("Car not found with ID: " + id)
+                           .build();
+        }
+    }
+    
+    
+    @PUT
+    @Path("{id}/edit")
+    public Response editCarById(@PathParam("id") String id, CarEntity car) {
+    	
+    	UUID carId = UUID.fromString(id);  // Convert string ID to UUID
+
+        // Retrieve the existing car by ID
+        CarEntity existingCar = carRepository.findByUUID(carId);
+        if (existingCar == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Car not found").build();
+        }
+        else {
+        	// Update the existing car with the new data
+            existingCar.setBrand(car.getBrand());
+            existingCar.setModel(car.getModel());
+            existingCar.setEngineType(car.getEngineType());
+
+            // Call the repository to update the car
+            carRepository.updateCar(existingCar);
+
+            // Return a success response with the updated car entity
+            return Response.ok(existingCar).build();
+        }
+
+        
+    	
+        
+
     }
     
     

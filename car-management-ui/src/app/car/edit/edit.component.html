@@ -1,1 +1,48 @@
-<p>edit works!</p>
+<div class="container">
+    <h2>Edit Car</h2>
+    <form (ngSubmit)="onSubmit(carForm)" #carForm="ngForm">
+      
+      <!-- Brand Field -->
+      <div class="form-group">
+        <label for="brand">Brand:</label>
+        <input type="text" id="brand" required [(ngModel)]="car.brand" name="brand" class="form-control" #brand="ngModel" />
+      </div>
+  
+      <!-- Model Field -->
+      <div class="form-group">
+        <label for="model">Model:</label>
+        <input type="text" id="model" required [(ngModel)]="car.model" name="model" class="form-control" #model="ngModel" />
+      </div>
+  
+      <!-- Engine Type Field -->
+      <div class="form-group">
+        <label for="engineType">Engine Type:</label>
+        <select id="engineType" required [(ngModel)]="car.engineType" name="engineType" class="form-control" #engineType="ngModel">
+          <option value="">Select engine type</option>
+          <option value="BEV">Battery Electric Vehicle (BEV)</option>
+          <option value="HEV">Hybrid Electric Vehicle (HEV)</option>
+          <option value="PHEV">Plug-in Hybrid Electric Vehicle (PHEV)</option>
+          <option value="ICE">Internal Combustion Engine (ICE)</option>
+        </select>
+      </div>
+  
+      <br>
+      <button type="submit" class="btn btn-primary" >Update Car</button>
+
+      <div *ngIf="successMessage.length > 0" class="text-success"> 
+        <ul>
+          <li>{{ successMessage }}</li>
+        </ul>
+      </div>
+
+      <div *ngIf="validationMessages.length > 0" class="text-danger">
+        <ul>
+          <li *ngFor="let message of validationMessages">{{ message }}</li>
+        </ul>
+      </div>
+
+      
+  
+    </form>
+  </div>
+  

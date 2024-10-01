@@ -37,4 +37,16 @@ public class CarService {
         carRepository.persist(carEntity); // Persist the CarEntity
         return CarEntity.toCar(carEntity); // Convert back to Car and return
     }
+    
+    @Transactional
+    public boolean deleteCar(UUID id) {
+        CarEntity car = carRepository.findByUUID(id); // Find the car by ID
+
+        if (car != null) {
+            carRepository.delete(car); // Delete the car if found
+            return true; // Return true if deletion was successful
+        }
+
+        return false; // Return false if the car was not found
+    }
 }

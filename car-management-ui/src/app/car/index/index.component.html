@@ -20,7 +20,7 @@
                 <td>
                     <a href="#" [routerLink]="['/car/', car.id, 'view']" class="btn btn-info">View</a>
                     <a href="#" [routerLink]="['/car/', car.id, 'edit']" class="btn btn-primary">Edit</a>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteCar(car.id)">Delete</button>
                 </td>
             </tr>
         </tbody>

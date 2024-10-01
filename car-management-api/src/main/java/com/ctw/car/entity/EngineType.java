@@ -8,5 +8,6 @@ public enum EngineType {
     BEV, // Electric
     PHEV, // Plugin hybrid
     GASOLINE, // ICE/Gasoline
-    DIESEL; // ICE/Diesel
+    DIESEL, // ICE/Diesel
+	ICE;
 }

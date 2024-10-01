@@ -47,12 +47,19 @@ export class CarService {
       brand: brand,
       engineType: engineType
     };
-
     // Make a POST request with query parameters
     return this.httpClient.post(`${this.apiURL}/car/create?model=${model}&brand=${brand}&engineType=${engineType}`, car, { headers: this.httpOptions.headers })
       .pipe(
         catchError(this.errorHandler)
       );
+  }
+
+  deleteCar(carId: string | undefined): Observable<any> {
+    return this.httpClient.delete(`${this.apiURL}/car/delete/${carId}`); // Adjust the endpoint accordingly
+  }
+
+  updateCar(car: Car): Observable<any> {
+    return this.httpClient.put<any>(`${this.apiURL}/car/${car.id}/edit`, car, this.httpOptions);
   }
 
 

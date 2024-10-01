@@ -24,9 +24,27 @@ export class IndexComponent {
    * @return response()
    */
   ngOnInit(): void {
+    this.loadCars(); 
+  }
+
+  loadCars(): void {
     this.carService.getAll().subscribe((data: Car[])=>{
       this.cars = data;
-    })  
+    });
+  }
+
+  deleteCar(carId: string | undefined): void {
+    if (confirm('Are you sure you want to delete this car with id '+carId+'?')) { // Confirm before deletion
+      this.carService.deleteCar(carId).subscribe({
+        next: (response) => {
+          console.log('Car deleted successfully!', response);
+          this.loadCars(); // Reload the cars after deletion to update the list
+        },
+        error: (error) => {
+          console.error('There was an error deleting the car!', error);
+        }
+      });
+    }
   }
 
   
