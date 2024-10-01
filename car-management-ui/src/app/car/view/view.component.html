@@ -1,1 +1,10 @@
-<p>view works!</p>
+<div *ngIf="car">
+    <h1>Car Details</h1>
+    <p><strong>Model:</strong> {{ car.model }}</p>
+    <p><strong>Brand:</strong> {{ car.brand }}</p>
+    <p><strong>Engine Type:</strong> {{ car.engineType }}</p>
+  </div>
+  
+  <div *ngIf="!car">
+    <p>Loading car details...</p>
+  </div>

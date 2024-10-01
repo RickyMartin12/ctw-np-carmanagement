@@ -12,7 +12,7 @@ import java.util.UUID;
 @Table(name = "T_CAR")
 public class CarEntity extends PanacheEntityBase {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     public UUID id;
 
@@ -33,9 +33,11 @@ public class CarEntity extends PanacheEntityBase {
     public String createdBy;
 
     public static Car toCar(CarEntity carEntity) {
-        if (Objects.nonNull(carEntity)) {
-            return new Car(carEntity.id, carEntity.brand, carEntity.model, carEntity.engineType);
+        if (carEntity != null) {
+            return new Car(carEntity.id, carEntity.brand, carEntity.model, carEntity.engineType); // Adjust as per your Car class
         }
         return null;
     }
+
 }
+

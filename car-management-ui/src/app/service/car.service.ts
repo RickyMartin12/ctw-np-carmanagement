@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import {  Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -34,6 +34,27 @@ export class CarService {
       catchError(this.errorHandler)
     )
   }
+
+  getCarById(id: string): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}/car/${id}`);
+  }
+
+  createCar(model: string, brand: string, engineType: string): Observable<any> {
+
+    const car: Car = {
+      id: undefined, // Or set it to a default value if required
+      model: model,
+      brand: brand,
+      engineType: engineType
+    };
+
+    // Make a POST request with query parameters
+    return this.httpClient.post(`${this.apiURL}/car/create?model=${model}&brand=${brand}&engineType=${engineType}`, car, { headers: this.httpOptions.headers })
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+
 
   /** 
    * Write code on Method

@@ -1,1 +1,43 @@
-<p>create works!</p>
+<div class="container">
+  <h2>Create a New Car</h2>
+  <form (ngSubmit)="onSubmit(carForm)" #carForm="ngForm">
+    
+    <!-- Brand Field -->
+    <div class="form-group">
+      <label for="brand">Brand:</label>
+      <input type="text" id="brand" required [(ngModel)]="brand" name="brand" class="form-control" #brand="ngModel"  />
+      <!-- Validation Error for Brand -->
+      <div *ngIf="brand.invalid" class="text-danger">
+        Brand is required.
+      </div>
+    </div>
+
+    <!-- Model Field -->
+    <div class="form-group">
+      <label for="model">Model:</label>
+      <input type="text" id="model" required [(ngModel)]="model" name="model" class="form-control" #model="ngModel" />
+      <!-- Validation Error for Model -->
+      <div *ngIf="model.invalid && model.touched" class="text-danger">
+        Model is required.
+      </div>
+    </div>
+
+    <!-- Engine Type Field -->
+    <div class="form-group">
+      <label for="engineType">Engine Type:</label>
+      <select id="engineType" required [(ngModel)]="engineType" name="engineType" class="form-control" #engineType="ngModel">
+        <option value="">Select engine type</option>
+        <option value="BEV">Battery Electric Vehicle (BEV)</option>
+        <option value="HEV">Hybrid Electric Vehicle (HEV)</option>
+        <option value="PHEV">Plug-in Hybrid Electric Vehicle (PHEV)</option>
+        <option value="ICE">Internal Combustion Engine (ICE)</option>
+      </select>
+      <!-- Validation Error for Engine Type -->
+      <div *ngIf="engineType.invalid && engineType.touched" class="text-danger">
+        Engine Type is required.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="carForm.invalid">Create Car</button>
+  </form>
+</div>
