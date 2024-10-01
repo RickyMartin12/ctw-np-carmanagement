@@ -36,7 +36,7 @@
                 <td>{{ car.model }}</td>
                 <td> 
                     <ng-container *ngIf="car.image; else noImage">
-                        <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}" style="width: 100px; height: auto;" />
+                        <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}" loading="lazy" style="width: 100px; height: auto;" />
                     </ng-container>
                     <ng-template #noImage>
                         <span><img src="assets/images/cam-off.png" alt=""  style="width: 100px; height: auto;"/></span>

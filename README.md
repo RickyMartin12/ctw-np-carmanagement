@@ -17,9 +17,9 @@ To run the project you only need to have the following installed in your machine
 ## Architecture
 
 The Car Management application has three components:
-- Frontend application
-- Backend application
-- Postgres instance
+- Frontend application (Angular JS)
+- Backend application (Quarkus - Java 22)
+- MYSQL instance
 
 The following diagram represents the basic architecture of the project
 
@@ -27,7 +27,7 @@ The following diagram represents the basic architecture of the project
 architecture-beta
   group app[Car Management]
 
-    service db(database)[Postgres] in app
+    service db(database)[MYSQL] in app
     service api(server)[Backend] in app
     service ui(server)[Frontend] in app
 
