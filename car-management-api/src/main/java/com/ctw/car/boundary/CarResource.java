@@ -110,6 +110,7 @@ public class CarResource {
             existingCar.setBrand(car.getBrand());
             existingCar.setModel(car.getModel());
             existingCar.setEngineType(car.getEngineType());
+            //existingCar.setCreatedAt(LocalDateTime.now());
 
             // Call the repository to update the car
             carRepository.updateCar(existingCar);

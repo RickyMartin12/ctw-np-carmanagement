@@ -2,8 +2,21 @@
     <h1>Car Management</h1>
 
     <a href="#" routerLink="/car/create/" class="btn btn-success">Create New Car</a>
+
+    <!-- Search form for Brand and Model -->
+    <div class="form-group">
+        <label for="searchBrand">Search by Brand:</label>
+        <input type="text" id="searchBrand" [(ngModel)]="searchBrand" class="form-control" placeholder="Enter brand">
+    </div>
+
+    <div class="form-group">
+        <label for="searchModel">Search by Model:</label>
+        <input type="text" id="searchModel" [(ngModel)]="searchModel" class="form-control" placeholder="Enter model">
+    </div>
+
+    <button class="btn btn-primary" (click)="filterCars()">Filter Cars</button>
     
-    <table class="table table-striped">
+    <table class="table table-striped" *ngIf="filteredCarList.length > 0">
         <thead>
             <tr>
             <th>ID</th>
@@ -13,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let car of cars">
+            <tr *ngFor="let car of filteredCarList">
                 <td>{{ car.id }}</td>
                 <td>{{ car.brand }}</td>
                 <td>{{ car.model }}</td>
