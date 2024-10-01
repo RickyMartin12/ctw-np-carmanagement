@@ -25,6 +25,32 @@
           <option value="ICE">Internal Combustion Engine (ICE)</option>
         </select>
       </div>
+
+      <div class="form-group">
+        <label for="color">Color:</label>
+        <input type="text" id="color" required [(ngModel)]="car.color" name="color" class="form-control" #color="ngModel" />
+      </div>
+
+      <!-- Image Upload Field -->
+      <div class="form-group">
+        <label for="carImage">Car Image:</label>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <ng-container *ngIf="car.image; else noImage">
+                    <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}" class="img-responsive" style="width: 100%"/>
+                </ng-container>
+                <ng-template #noImage>
+                    <span><img src="assets/images/cam-off.png" alt="" class="img-responsive" style="width: 50%"/></span>
+                </ng-template>
+                
+            </div>
+        </div>
+        
+
+        <br>
+        <input type="file" id="image" name="image" (change)="onFileSelected($event)" class="form-control" accept="image/*" />
+      </div>
   
       <br>
       <button type="submit" class="btn btn-primary" >Update Car</button>

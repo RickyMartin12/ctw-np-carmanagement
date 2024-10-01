@@ -3,6 +3,13 @@
     <p><strong>Model:</strong> {{ car.model }}</p>
     <p><strong>Brand:</strong> {{ car.brand }}</p>
     <p><strong>Engine Type:</strong> {{ car.engineType }}</p>
+    <p><strong>Color:</strong> {{car.color}}</p>
+    <p><strong>Image:</strong> <br><ng-container *ngIf="car.image; else noImage">
+        <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}" style="width: 100px; height: auto;" />
+    </ng-container>
+    <ng-template #noImage>
+        <img src="assets/images/cam-off.png" alt="" class="img-responsive" style="width: 50%"/>
+    </ng-template></p>
   </div>
   
   <div *ngIf="!car">

@@ -1,7 +1,6 @@
 package com.ctw.car.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -31,10 +30,32 @@ public class CarEntity extends PanacheEntityBase {
 
     @Column(name = "CREATED_BY", updatable = false)
     public String createdBy;
+    
+    @Column(name = "IMAGE")
+    public String image;
+    
+    @Column(name = "COLOR")
+    public String color;
 
-    public static Car toCar(CarEntity carEntity) {
+    public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public static Car toCar(CarEntity carEntity) {
         if (carEntity != null) {
-            return new Car(carEntity.id, carEntity.brand, carEntity.model, carEntity.engineType); // Adjust as per your Car class
+            return new Car(carEntity.id, carEntity.brand, carEntity.model, carEntity.engineType, carEntity.color, carEntity.image); // Adjust as per your Car class
         }
         return null;
     }

@@ -34,7 +34,7 @@ public class CarRepository implements PanacheRepository<CarEntity> {
     	try {
             // Query to select only model and brand
             TypedQuery<Car> query = getEntityManager().createQuery(
-                "SELECT new com.ctw.car.entity.Car(c.id, c.brand, c.model, c.engineType) FROM CarEntity c WHERE c.id = :id", Car.class);
+                "SELECT new com.ctw.car.entity.Car(c.id, c.brand, c.model, c.engineType, c.color, c.image) FROM CarEntity c WHERE c.id = :id", Car.class);
             query.setParameter("id", id);
             return query.getSingleResult();
         } catch (NoResultException e) {

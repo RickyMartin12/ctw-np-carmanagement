@@ -45,7 +45,9 @@ export class CarService {
       id: undefined, // Or set it to a default value if required
       model: model,
       brand: brand,
-      engineType: engineType
+      engineType: engineType,
+      image: '',
+      color: ''
     };
     // Make a POST request with query parameters
     return this.httpClient.post(`${this.apiURL}/car/create?model=${model}&brand=${brand}&engineType=${engineType}`, car, { headers: this.httpOptions.headers })
@@ -60,6 +62,15 @@ export class CarService {
 
   updateCar(car: Car): Observable<any> {
     return this.httpClient.put<any>(`${this.apiURL}/car/${car.id}/edit`, car, this.httpOptions);
+  }
+  
+
+  createCar2(carData: FormData): Observable<any> {
+    return this.httpClient.post(`${this.apiURL}/car/create`, carData);
+  }
+
+  updateCar2(carId: string | undefined, car: FormData): Observable<any> {
+    return this.httpClient.put<any>(`${this.apiURL}/car/${carId}/edit`, car);
   }
 
 

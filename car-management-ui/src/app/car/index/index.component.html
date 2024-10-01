@@ -14,6 +14,8 @@
         <input type="text" id="searchModel" [(ngModel)]="searchModel" class="form-control" placeholder="Enter model">
     </div>
 
+    <br>
+
     <button class="btn btn-primary" (click)="filterCars()">Filter Cars</button>
     
     <table class="table table-striped" *ngIf="filteredCarList.length > 0">
@@ -22,6 +24,8 @@
             <th>ID</th>
             <th>Brand</th>
             <th>Model</th>
+            <th>Image</th>
+            <th>Color</th>
             <th width="250px">Action</th>
             </tr>
         </thead>
@@ -30,6 +34,15 @@
                 <td>{{ car.id }}</td>
                 <td>{{ car.brand }}</td>
                 <td>{{ car.model }}</td>
+                <td> 
+                    <ng-container *ngIf="car.image; else noImage">
+                        <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}" style="width: 100px; height: auto;" />
+                    </ng-container>
+                    <ng-template #noImage>
+                        <span><img src="assets/images/cam-off.png" alt=""  style="width: 100px; height: auto;"/></span>
+                    </ng-template>
+                </td>
+                <td>{{car.color}}</td>
                 <td>
                     <a href="#" [routerLink]="['/car/', car.id, 'view']" class="btn btn-info">View</a>
                     <a href="#" [routerLink]="['/car/', car.id, 'edit']" class="btn btn-primary">Edit</a>
