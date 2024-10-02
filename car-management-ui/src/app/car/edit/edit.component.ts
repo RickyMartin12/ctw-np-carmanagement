@@ -4,11 +4,12 @@ import { Car } from '../../model/car';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule,NgForm  } from '@angular/forms'; // Import FormsModule
+import { MenuComponent } from '../../menu/menu.component'; // Import the MenuComponent
 
 @Component({
   selector: 'app-edit',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, MenuComponent],
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'] // Fix typo: styleUrl -> styleUrls
 })

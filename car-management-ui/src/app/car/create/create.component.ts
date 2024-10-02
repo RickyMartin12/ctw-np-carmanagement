@@ -4,11 +4,12 @@ import { CarService } from '../../service/car.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule  } from '@angular/router';
 import { FormsModule,NgForm  } from '@angular/forms'; // Import FormsModule
+import { MenuComponent } from '../../menu/menu.component'; // Import the MenuComponent
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, MenuComponent],
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'] // Fix typo: styleUrl -> styleUrls
 })

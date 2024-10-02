@@ -3,10 +3,11 @@ import { CarService } from '../../service/car.service';
 import { Car } from '../../model/car';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute  } from '@angular/router';
+import { MenuComponent } from '../../menu/menu.component'; // Import the MenuComponent
 @Component({
   selector: 'app-view',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MenuComponent],
   templateUrl: './view.component.html',
   styleUrl: './view.component.css'
 })

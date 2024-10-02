@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { CarService } from '../../service/car.service';
 import { Car } from '../../model/car';
 import { FormsModule,NgForm  } from '@angular/forms'; // Import FormsModule
+import { MenuComponent } from '../../menu/menu.component'; // Import the MenuComponent
 
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, MenuComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css'
 })

@@ -1,3 +1,5 @@
+<app-menu></app-menu>
+
 <div class="container">
     <h2>Edit Car</h2>
     <form (ngSubmit)="onSubmit(carForm)" #carForm="ngForm">
@@ -20,9 +22,10 @@
         <select id="engineType" required [(ngModel)]="car.engineType" name="engineType" class="form-control" #engineType="ngModel">
           <option value="">Select engine type</option>
           <option value="BEV">Battery Electric Vehicle (BEV)</option>
-          <option value="HEV">Hybrid Electric Vehicle (HEV)</option>
           <option value="PHEV">Plug-in Hybrid Electric Vehicle (PHEV)</option>
           <option value="ICE">Internal Combustion Engine (ICE)</option>
+          <option value="GASOLINE">ICE / Gasoline</option>
+          <option value="DIESEL">DIESEL</option>
         </select>
       </div>
 
