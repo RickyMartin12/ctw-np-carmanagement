@@ -1,0 +1,53 @@
+<app-menu></app-menu>
+  
+<div class="container">
+  <div *ngIf="reservation">
+
+    <h1>Reservation Details</h1>
+
+    <fieldset class="border p-4">
+        <legend class="w-auto">Reservation</legend>
+
+        <div class="form-group">
+            <p><strong>Name Person:</strong> {{ reservation.name }}</p>
+        </div>
+
+        <div class="form-group">
+            <p><strong>Location:</strong> {{ reservation.location }}</p>
+        </div>
+
+        <div class="form-group">
+            <p><strong>Contact Number:</strong> {{ reservation.contactNumber }}</p>
+        </div>
+
+        <div class="form-group">
+            <p><strong>License Number:</strong> {{ reservation.licenseNumber }}</p>
+        </div>
+
+        <div class="form-group">
+            <p><strong>Date and Hour:</strong> {{ reservation.dateHour | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+        </div>
+
+    </fieldset>
+    <br>
+    <fieldset class="border p-4">
+        <legend class="w-auto">Car</legend>
+
+        <p><strong>Model:</strong> {{ reservation.model }}</p>
+        <p><strong>Brand:</strong> {{ reservation.brand }}</p>
+        <p><strong>Engine Type:</strong> {{ reservation.engineType }}</p>
+        <p><strong>Image:</strong> <br><ng-container *ngIf="reservation.image; else noImage">
+            <img [src]="reservation.image" alt="{{ reservation.brand }} {{ reservation.model }}" class="img-responsive" style="width: 80%; height: auto;" />
+        </ng-container>
+        <ng-template #noImage>
+            <img src="assets/images/cam-off.png" alt="" class="img-responsive" style="width: 50%"/>
+        </ng-template></p>
+    </fieldset>
+    
+    
+  </div>
+  
+  <div *ngIf="!reservation">
+    <p>Loading reservation details...</p>
+  </div>
+</div>

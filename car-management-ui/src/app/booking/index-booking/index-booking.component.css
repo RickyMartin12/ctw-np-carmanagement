@@ -1,0 +1,18 @@
+/* Apply a width to each table header and data cell */
+.table th, .table td {
+    width: 150px; /* Set the width of each column */
+    white-space: nowrap; /* Prevent content from wrapping to the next line */
+}
+
+/* You can also adjust specific columns like this */
+.table th:nth-child(1), .table td:nth-child(1) {
+    width: 100px; /* Set custom width for the first column (ID) */
+}
+
+.table th:nth-child(6), .table td:nth-child(6) {
+    width: 200px; /* Set custom width for the 'Date and Hour' column */
+}
+
+.table th:nth-child(12), .table td:nth-child(12) {
+    width: 230px; /* Set custom width for the 'Date and Hour' column */
+}

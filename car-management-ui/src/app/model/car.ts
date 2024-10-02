@@ -3,6 +3,6 @@ export interface Car {
     brand: string,
     model: string,
     engineType: string,
-    color: string
+    color: string,
     image: string
 }

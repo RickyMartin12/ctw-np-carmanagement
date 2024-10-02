@@ -1,0 +1,9 @@
+fieldset {
+    border: 2px solid #007bff; /* Bootstrap primary color */
+}
+
+legend {
+    font-size: 1.5rem; /* Increase the font size of the legend */
+    font-weight: bold; /* Make the legend text bold */
+    color: #007bff; /* Change the color of the legend text */
+}

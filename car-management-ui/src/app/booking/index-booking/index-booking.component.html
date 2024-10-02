@@ -1,6 +1,59 @@
 <app-menu></app-menu>
 
-<div class="container">
 
-    <h1>List Bookings - Reservation</h1>
+<div class="container">
+    
+    <h1>List Cars</h1>
+
+    <a href="#" routerLink="/reservation/create/" class="btn btn-success">Create New Reservation</a>
+
+    <br>
+
+    <div class="table-responsive">
+        <table class="table table-striped" *ngIf="reservations.length > 0">
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>Name Person</th>
+                <th>Location</th>
+                <th>Contact Number</th>
+                <th>License Number</th>
+                <th>Date and Hour</th>
+                <th>Car ID</th>
+                <th>Model Car</th>
+                <th>Engine Type</th>
+                <th>Brand Car</th>
+                <th>Image</th>
+                <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rers of reservations">
+                    <td>{{ rers.id }}</td>
+                    <td>{{ rers.name }}</td>
+                    <td>{{ rers.location }}</td>
+                    <td>{{ rers.contactNumber }}</td>
+                    <td>{{ rers.licenseNumber }}</td>
+                    <td>{{ rers.dateHour | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td>{{ rers.car_id }}</td>
+                    <td>{{ rers.model }}</td>
+                    <td>{{ rers.brand }}</td>
+                    <td>{{ rers.engineType }}</td>
+                    <td> 
+                        <ng-container *ngIf="rers.image; else noImage">
+                            <img [src]="rers.image" alt="{{ rers.brand }} {{ rers.model }}" loading="lazy" style="width: 100px; height: auto;" />
+                        </ng-container>
+                        <ng-template #noImage>
+                            <span><img src="assets/images/cam-off.png" alt=""  style="width: 100px; height: auto;"/></span>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <a href="#" [routerLink]="['/reservation/', rers.id, 'view']" class="btn btn-info">View</a>
+                        <a href="#" [routerLink]="['/reservation/', rers.id, 'edit']" class="btn btn-primary">Edit</a>
+                        <button type="button" class="btn btn-danger" (click)="deleteReservation(rers.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

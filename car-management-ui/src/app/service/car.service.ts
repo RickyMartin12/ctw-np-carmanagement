@@ -84,4 +84,17 @@ export class CarService {
     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     return throwError(errorMessage);
   }
+
+  getAllReservations(): Observable<any> {
+  
+    return this.httpClient.get(this.apiURL + '/reservation')
+  
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  getReservationById(rersId: number): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}/reservation/${rersId}`);
+  }
 }
