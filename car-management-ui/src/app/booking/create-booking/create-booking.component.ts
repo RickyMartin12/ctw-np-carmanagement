@@ -43,7 +43,7 @@ export class CreateBookingComponent implements OnInit {
   carByIds: number[] = []; // To store the car IDs from reservations
   
 
-  constructor(public carService: CarService, private datePipe: DatePipe) { }
+  constructor(public carService: CarService, private datePipe: DatePipe, private router: Router) { }
 
 
 
@@ -173,7 +173,6 @@ export class CreateBookingComponent implements OnInit {
             this.validationMessages.push("The Car cannot be booked between the dates. Choose another date our another car to booked");
           }
           else {
-            console.log('backend');
 
             const reservationData = {
               name: this.name_person,
@@ -185,11 +184,17 @@ export class CreateBookingComponent implements OnInit {
               carId: this.car_id
             };
 
-            console.log(reservationData);
+            //console.log(reservationData);
 
             this.carService.createReservation(reservationData).subscribe({
               next: (response) => {
                 console.log('Reservation created successfully:', response);
+                this.successMessage = 'Reservation '+response.name+' with car ID '+response.carId+' created successfully!';
+
+                setTimeout(() => {
+                  this.router.navigate(['/booking']); // Redirect to home page on success
+                }, 5000); 
+                //this.router.navigate(['/booking']); // Redirect to home page on success
               },
               error: (error) => {
                   console.error('There was an error!', error);
