@@ -119,4 +119,10 @@ export class CarService {
     let num: number = Number(rersId);
     return this.httpClient.delete(`${this.apiURL}/reservation/delete/${num}`); // Adjust the endpoint accordingly
   }
+
+  updateReservation(rersId: number | undefined, reservationData: any): Observable<any> {
+    console.log(rersId);
+    return this.httpClient.put<any>(`${this.apiURL}/reservation/${rersId}/edit`, reservationData, this.httpOptions);
+  }
+
 }

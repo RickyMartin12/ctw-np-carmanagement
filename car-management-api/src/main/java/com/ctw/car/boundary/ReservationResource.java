@@ -3,6 +3,7 @@ package com.ctw.car.boundary;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +21,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -125,8 +127,81 @@ private final ReservationService reservationService;
             return Response.noContent().build(); // Return 204 No Content on success
         } else {
             return Response.status(Response.Status.NOT_FOUND) // Return 404 Not Found if the car does not exist
-                           .entity("Car not found with ID: " + id)
+                           .entity("Reservation not found with ID: " + id)
                            .build();
         }
     }
-}
+    
+    @PUT
+    @Path("{id}/edit")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateReservation(@PathParam("id") Integer id, ReservationDTO reservationDTO) {
+        Reservation reserv = reservationRespository.findById(id);
+
+        if (reserv == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Reservation not found with ID: " + id)
+                    .build();
+        }
+
+        reserv.setName(reservationDTO.getName());
+        reserv.setLocation(reservationDTO.getLocation());
+        reserv.setContactNumber(reservationDTO.getContactNumber());
+        reserv.setLicenseNumber(reservationDTO.getLicenseNumber());
+
+        LocalDateTime dateTime;
+        LocalDateTime dateTimeFim;
+
+        try {
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            // Check if the dates contain a space, and use the appropriate formatter
+            if (reservationDTO.getDataInicio().contains(" ") && reservationDTO.getDataFim().contains(" ")) {
+                dateTime = LocalDateTime.parse(reservationDTO.getDataInicio(), inputFormatter);
+                dateTimeFim = LocalDateTime.parse(reservationDTO.getDataFim(), inputFormatter);
+            } else {
+                // Use the default ISO format if no space is found
+                dateTime = LocalDateTime.parse(reservationDTO.getDataInicio());
+                dateTimeFim = LocalDateTime.parse(reservationDTO.getDataFim());
+            }
+
+            // Convert to the 'yyyy-MM-dd HH:mm:ss' format for the database
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateHour = dateTime.format(outputFormatter);
+            String formattedDateHourFim = dateTimeFim.format(outputFormatter);
+
+            // Set the dates in the reservation object
+            reserv.setDateHour(Timestamp.valueOf(formattedDateHour));
+            reserv.setDataHourFim(Timestamp.valueOf(formattedDateHourFim));
+
+            // Handle the car ID (UUID)
+            String hexString = reservationDTO.getCarId();
+            if (hexString.startsWith("0x")) {
+                hexString = hexString.substring(2);
+            }
+
+            // Convert hex to UUID
+            String uuidString = hexString.replaceFirst(
+                    "(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w+)", 
+                    "$1-$2-$3-$4-$5"
+            );
+            reserv.setCarId(UUID.fromString(uuidString));
+
+        } catch (DateTimeParseException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid date format: " + e.getMessage())
+                    .build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Invalid car ID format: " + e.getMessage())
+                    .build();
+        }
+
+        reservationRespository.updateReservation(reserv);
+        return Response.ok(reserv).build();
+    }
+
+
+    
+ }

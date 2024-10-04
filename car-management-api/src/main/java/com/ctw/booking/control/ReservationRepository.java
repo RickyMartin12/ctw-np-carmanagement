@@ -16,6 +16,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class ReservationRepository implements PanacheRepository<Reservation> {
@@ -105,6 +106,11 @@ public class ReservationRepository implements PanacheRepository<Reservation> {
     
     public Reservation findById(Integer id) {
         return entityManager.find(Reservation.class, id);
+    }
+    
+    @Transactional
+    public void updateReservation(Reservation resv) {
+        entityManager.merge(resv); // Merges the state of the car entity
     }
     
 

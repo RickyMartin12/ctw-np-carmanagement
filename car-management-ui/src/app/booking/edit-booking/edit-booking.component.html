@@ -1,0 +1,94 @@
+
+<app-menu></app-menu>
+
+
+<div class="container">
+
+    <h1>Create a Reservation</h1>
+
+
+    <form (ngSubmit)="onSubmit(reservationForm)" #reservationForm="ngForm">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name_person">Name Person:</label>
+                    <input type="text" id="name_person" required [(ngModel)]="reservation.name" name="name_person" class="form-control" #namePersonModel="ngModel" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" required [(ngModel)]="reservation.location" name="location" class="form-control" #locationModel="ngModel" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="contact_number">Contact Number:</label>
+                    <input type="text" id="contact_number" required [(ngModel)]="reservation.contact_number" name="contact_number" class="form-control" #contactNumberModel="ngModel" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="license_number">License Number:</label>
+                    <input type="text" id="license_number" required [(ngModel)]="reservation.license_number" name="license_number" class="form-control" #licenseNumberModel="ngModel" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="data_hour">Start Date and Hour:</label>
+                    <input type="datetime-local" class="form-control" id="data_hour" name="data_hour" required [(ngModel)]="reservation.date_hour" [min]="minDateTime"  (change)="onStartDateChange()" #dataHourModel="ngModel">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="data_hour_fim">End Date and Hour:</label>
+                    <input type="datetime-local" class="form-control" id="data_hour_fim" name="data_hour_fim" required [(ngModel)]="reservation.date_hour_fim" [min]="minEndDateTime" #dataHourFimModel="ngModel">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="car_id">Select Car</label>
+                    <select class="form-control" id="car_id"  name="car_id" [(ngModel)]="reservation.car_id" required #carIdModel="ngModel">
+                        <option value="">Please select a car</option>  
+                        <option *ngFor="let car of listCars" [value]="car.id">{{ car.brand }} - {{ car.model }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+
+        
+
+
+        <br>
+      <button type="submit" class="btn btn-primary" >Update Reservation</button>
+
+      <div *ngIf="validationMessages.length > 0" class="text-danger">
+        <ul>
+          <li *ngFor="let message of validationMessages">{{ message }}</li>
+        </ul>
+      </div>
+
+      <div *ngIf="successMessage.length > 0" class="text-success"> 
+        <ul>
+          <li>{{ successMessage }}</li>
+        </ul>
+      </div>
+
+    </form>
+
+
+    
+
+</div>    
+
