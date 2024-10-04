@@ -35,3 +35,11 @@ architecture-beta
     api:R -- L:db
 ```
 The Frontend (car-management-ui folder) and the Backend (car-management-api folder) components are the ones you will need to work on to implement the user stories of the exercice. Please read the Readme files in the folders of the Frontend and Backend. They have instructions to run the development environment and to test your changes.
+
+Run Angular App
+
+cd ctw-np-carmanagement/car-management-ui
+
+car-management-ui> npm install (Instalar as packages)
+
+car-management-ui> npm start (Correr o programa ) - 4200
