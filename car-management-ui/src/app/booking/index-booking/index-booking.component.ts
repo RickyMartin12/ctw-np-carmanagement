@@ -33,7 +33,15 @@ export class IndexBookingComponent {
 
   deleteReservation(rersId: string | undefined): void {
     if (confirm('Are you sure you want to delete this Reservation with id '+rersId+'?')) { // Confirm before deletion
-      
+      this.carService.deleteReservation(rersId).subscribe({
+        next: (response) => {
+          console.log('Car deleted successfully!', response);
+          this.loadRservations(); // Reload the cars after deletion to update the list
+        },
+        error: (error) => {
+          console.error('There was an error deleting the car!', error);
+        }
+      });
     }
   }
 }

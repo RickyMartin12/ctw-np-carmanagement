@@ -3,6 +3,8 @@ package com.ctw.car.control;
 import com.ctw.car.entity.Car;
 import com.ctw.car.entity.CarEntity;
 import com.ctw.car.entity.EngineType;
+import com.ctw.dto.CarDTO;
+
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -48,5 +50,9 @@ public class CarService {
         }
 
         return false; // Return false if the car was not found
+    }
+    
+    public List<CarDTO> getAllCars() {
+        return carRepository.fetchAllCarsReserv();
     }
 }

@@ -8,6 +8,9 @@ import com.ctw.car.entity.CarEntity;
 import com.ctw.car.entity.CarEntityFormData;
 import com.ctw.car.entity.EngineType;
 import com.ctw.car.entity.Routes;
+import com.ctw.dto.CarDTO;
+import com.ctw.dto.ReservationWithCarDTO;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.NoResultException;
@@ -76,6 +79,19 @@ public class CarResource {
 
     }
     
+    @GET
+    @Path("/string/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCarByIdString(@PathParam("id") String id) {
+    	try {
+            Car car = carRepository.findByIdAndSelectModelAndBrandBySring(id);
+            return Response.ok(car).build();
+        } catch (NoResultException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+    }
     /*@POST
     @Path("/create") // Define the path for creating a new car
     public Response createCar(@QueryParam("model") String model,
@@ -273,6 +289,19 @@ public class CarResource {
                            .build(); // Return a 500 status if an error occurs
         }
 
+    }
+    
+    @GET
+    @Path("/listAll")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCarListAll() {
+    	try {
+    		List<CarDTO> carLists = carService.getAllCars();
+            return Response.ok(carLists).build();
+        } catch (NoResultException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
     
     

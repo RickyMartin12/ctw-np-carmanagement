@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.ctw.booking.entity.Reservation;
 import com.ctw.car.entity.Car;
+import com.ctw.car.entity.CarEntity;
 import com.ctw.dto.ReservationWithCarDTO;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -23,7 +24,7 @@ public class ReservationRepository implements PanacheRepository<Reservation> {
 
     public List<ReservationWithCarDTO> fetchAllReservation() {
         // Native SQL query
-        String sql = "SELECT t.id, t.name, t.location, t.contact_number, t.license_number, t.date_hour, " +
+        String sql = "SELECT t.id, t.name, t.location, t.contact_number, t.license_number, t.date_hour, t.data_hour_fim, " +
                      "t.car_id, c.MODEL, c.ENGINE_TYPE, c.BRAND, c.IMAGE " +
                      "FROM t_reservation t " +
                      "INNER JOIN t_car c ON c.ID = t.car_id";
@@ -36,7 +37,7 @@ public class ReservationRepository implements PanacheRepository<Reservation> {
         List<ReservationWithCarDTO> reservations = new ArrayList<>();
 
         for (Object[] row : results) {
-        	byte[] carIdBytes = (byte[]) row[6];
+        	byte[] carIdBytes = (byte[]) row[7];
             String carIdString = bytesToHex(carIdBytes); // Convert to hex string
             ReservationWithCarDTO reservation = new ReservationWithCarDTO(
                 (Integer) row[0],
@@ -45,11 +46,12 @@ public class ReservationRepository implements PanacheRepository<Reservation> {
                 (String) row[3],
                 (String) row[4],
                 (java.sql.Timestamp) row[5],
+                (java.sql.Timestamp) row[6],
                 carIdString,
-                (String) row[7],
                 (String) row[8],
                 (String) row[9],
-                (String) row[10]
+                (String) row[10],
+                (String) row[11]
             );
             reservations.add(reservation);
         }
@@ -60,7 +62,7 @@ public class ReservationRepository implements PanacheRepository<Reservation> {
     public ReservationWithCarDTO findByIdAndSelectCarAndReservation(int id) {
         try {
             // Native SQL query
-            String sql = "SELECT t.id, t.name, t.location, t.contact_number, t.license_number, t.date_hour, " +
+            String sql = "SELECT t.id, t.name, t.location, t.contact_number, t.license_number, t.date_hour, t.data_hour_fim, " +
                          "t.car_id, c.MODEL, c.ENGINE_TYPE, c.BRAND, c.IMAGE " +
                          "FROM t_reservation t " +
                          "INNER JOIN t_car c ON c.ID = t.car_id " +
@@ -75,7 +77,7 @@ public class ReservationRepository implements PanacheRepository<Reservation> {
             // Execute the query and retrieve the result
             Object[] result = (Object[]) query.getSingleResult();
             
-            byte[] carIdBytes = (byte[]) result[6];
+            byte[] carIdBytes = (byte[]) result[7];
             String carIdString = bytesToHex(carIdBytes); // Convert to hex string
             
             // Map the result to the DTO
@@ -86,11 +88,12 @@ public class ReservationRepository implements PanacheRepository<Reservation> {
                 (String) result[3],  // t.contact_number
                 (String) result[4],  // t.license_number
                 (java.sql.Timestamp) result[5],  // t.date_hour
+                (java.sql.Timestamp) result[6], 
                 carIdString,  // t.car_id (UUID or binary)
-                (String) result[7],  // c.MODEL
-                (String) result[8],  // c.ENGINE_TYPE
-                (String) result[9],  // c.BRAND
-                (String) result[10]  // c.IMAGE
+                (String) result[8],  // c.MODEL
+                (String) result[9],  // c.ENGINE_TYPE
+                (String) result[10],  // c.BRAND
+                (String) result[11]  // c.IMAGE
             );
 
             return reservation;
@@ -98,6 +101,12 @@ public class ReservationRepository implements PanacheRepository<Reservation> {
             return null; // Handle case where no result is found
         }
     }
+    
+    
+    public Reservation findById(Integer id) {
+        return entityManager.find(Reservation.class, id);
+    }
+    
 
  // Helper method to convert byte[] to hex string
     private String bytesToHex(byte[] bytes) {

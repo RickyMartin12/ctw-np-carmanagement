@@ -12,16 +12,16 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 2048)
+    @Column(name = "name", length = 2048)
     private String name;
 
-    @Column(length = 2048)
+    @Column(name = "location", length = 2048)
     private String location;
 
-    @Column(length = 20)
+    @Column(name = "contact_number", length = 20)
     private String contactNumber;
 
-    @Column(length = 20)
+    @Column(name = "license_number", length = 20)
     private String licenseNumber;
 
     @Column(name = "date_hour", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -29,8 +29,12 @@ public class Reservation {
 
     @Column(name = "car_id", nullable = false)
     private UUID carId;
+    
+    @Column(name = "data_hour_fim", nullable = true)
+    private Timestamp dataHourFim;
 
-    // Getters and Setters
+    
+	// Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -86,5 +90,14 @@ public class Reservation {
     public void setCarId(UUID carId) {
         this.carId = carId;
     }
+    
+    public Timestamp getDataHourFim() {
+		return dataHourFim;
+	}
+
+	public void setDataHourFim(Timestamp dataHourFim) {
+		this.dataHourFim = dataHourFim;
+	}
+
 }
 

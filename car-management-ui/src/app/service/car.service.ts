@@ -39,6 +39,10 @@ export class CarService {
     return this.httpClient.get(`${this.apiURL}/car/${id}`);
   }
 
+  getCarByIdString(id: string): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}/car/string/${id}`);
+  }
+
   createCar(model: string, brand: string, engineType: string): Observable<any> {
 
     const car: Car = {
@@ -96,5 +100,23 @@ export class CarService {
 
   getReservationById(rersId: number): Observable<any> {
     return this.httpClient.get(`${this.apiURL}/reservation/${rersId}`);
+  }
+
+  getAllCarsSelected(): Observable<any> {
+  
+    return this.httpClient.get(this.apiURL + '/car/listAll')
+  
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  createReservation(reservationData: any): Observable<any> {
+    return this.httpClient.post(`${this.apiURL}/reservation/create`, reservationData, this.httpOptions);
+  }
+
+  deleteReservation(rersId: string | undefined): Observable<any> {
+    let num: number = Number(rersId);
+    return this.httpClient.delete(`${this.apiURL}/reservation/delete/${num}`); // Adjust the endpoint accordingly
   }
 }

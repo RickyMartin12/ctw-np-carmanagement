@@ -5,5 +5,6 @@ export interface Reservation {
     contact_number: string,
     license_number: string,
     data_hour: string,
+    data_hour_fim: string,
     car_id: string
 }
